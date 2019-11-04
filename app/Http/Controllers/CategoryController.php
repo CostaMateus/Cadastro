@@ -14,7 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->get();
+
+        return view('categories')->with('categories', $categories);
     }
 
     /**
@@ -24,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('newcategory');
     }
 
     /**
@@ -35,7 +37,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'newcategory' => 'required|string',
+        ]);
+
+        $category = new Category();
+        $category->name = $validatedData['newcategory'];
+        $category->save();
+
+        return redirect('/categorias');
     }
 
     /**
@@ -55,9 +65,16 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($category_id)
     {
-        //
+        $category = Category::find(base64_decode($category_id));
+
+        if(isset($category))
+        {
+            return view('editcategory')->with('category', $category);
+        }
+
+        return redirect('/categorias');
     }
 
     /**
@@ -67,9 +84,21 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $category_id)
     {
-        //
+        $validatedData = $request->validate([
+            'editname' => 'required|string',
+        ]);
+
+        $category = Category::find(base64_decode($category_id));
+
+        if(isset($category))
+        {
+            $category->name = $validatedData['editname'];
+            $category->save();
+        }
+
+        return redirect('/categorias');
     }
 
     /**
@@ -78,8 +107,15 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($category_id)
     {
-        //
+        $category = Category::find(base64_decode($category_id));
+
+        if(isset($category))
+        {
+            $category->delete();
+        }
+
+        return redirect('/categorias');
     }
 }

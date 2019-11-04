@@ -7,12 +7,11 @@
             <form action="/categorias" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="nomeCategoria">Nome da Categoria</label>
-                    <input type="text" class="form-control"
-                        name="nomeCategoria" id="nomeCategoria" placeholder="Categoria">
+                    <label for="newcategory">Nome da Categoria</label>
+                    <input type="text" class="form-control" name="newcategory" id="newcategory" placeholder="Categoria" autofocus >
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>
+                <a href="/categorias" class="btn btn-danger btn-sm">Cancel</a>
             </form>
         </div>
     </div>

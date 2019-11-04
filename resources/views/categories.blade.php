@@ -5,7 +5,7 @@
         <div class="card-body">
             <h5 class="card-title">Cadastro de Categorias</h5>
 
-            @if(count($cats) > 0)
+            @if(count($categories) > 0)
                 <table class="table table-ordered table-hover">
                     <thead>
                         <tr>
@@ -15,14 +15,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cats as $cat)
+                        @foreach($categories as $key => $category)
                             <tr>
-                                <td>{{$cat->id}}</td>
-                                <td>{{$cat->nome}}</td>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $category->name }}</td>
                                 <td>
-                                    <a href="/categorias/editar/{{$cat->id}}"
+                                    <a href="/categorias/editar/{{ base64_encode($category->id) }}"
                                         class="btn btn-sm btn-primary">Editar</a>
-                                    <a href="/categorias/apagar/{{$cat->id}}"
+                                    <a href="/categorias/apagar/{{ base64_encode($category->id) }}"
                                         class="btn btn-sm btn-danger">Apagar</a>
                                 </td>
                             </tr>
