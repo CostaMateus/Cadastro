@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -45,7 +46,7 @@ class CategoryController extends Controller
         $category->name = $validatedData['newcategory'];
         $category->save();
 
-        return redirect('/categorias');
+        return redirect('/categories');
     }
 
     /**
@@ -74,7 +75,7 @@ class CategoryController extends Controller
             return view('editcategory')->with('category', $category);
         }
 
-        return redirect('/categorias');
+        return redirect('/categories');
     }
 
     /**
@@ -98,7 +99,7 @@ class CategoryController extends Controller
             $category->save();
         }
 
-        return redirect('/categorias');
+        return redirect('/categories');
     }
 
     /**
@@ -113,9 +114,10 @@ class CategoryController extends Controller
 
         if(isset($category))
         {
+            Product::where('category_id', $category->id)->delete();
             $category->delete();
         }
 
-        return redirect('/categorias');
+        return redirect('/categories');
     }
 }

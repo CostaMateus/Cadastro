@@ -5,7 +5,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mx-auto">
                 <li @if($current=="home")
                         class="nav-item active"
                     @else
@@ -13,19 +13,19 @@
                     @endif>
                     <a class="nav-link" href="/">Home </a>
                 </li>
-                <li @if($current=="produtos")
+                <li @if($current=="products")
                         class="nav-item active"
                     @else
                         class="nav-item"
                     @endif>
-                    <a class="nav-link" href="/produtos">Produtos</a>
+                    <a class="nav-link" href="/products">Produtos</a>
                 </li>
-                <li @if($current=="categorias")
+                <li @if($current=="categories")
                         class="nav-item active"
                     @else
                         class="nav-item"
                     @endif>
-                    <a class="nav-link" href="/categorias">Categorias </a>
+                    <a class="nav-link" href="/categories">Categorias </a>
                 </li>
             </ul>
         </div>

@@ -1,5 +1,7 @@
 @extends('layout.app', ["current" => "home"])
 
+@section('title', 'Home')
+
 @section('body')
 
     <div class="jumbotron bg-light border border-secondary">
@@ -12,7 +14,7 @@
                             Aqui você cadastra todos os seus produtos.
                             Só não se esqueça de cadastrar previamente as categorias
                         </p>
-                        <a href="/produtos" class="btn btn-primary">Cadastre seus produtos</a>
+                        <a href="/products" class="btn btn-primary">Cadastre seus produtos</a>
                     </div>
                 </div>
                 <div class="card border border-primary">
@@ -21,7 +23,7 @@
                         <p class="card=text">
                             Cadastre as categorias dos seus produtos
                         </p>
-                        <a href="/categorias" class="btn btn-primary">Cadastre suas categorias</a>
+                        <a href="/categories" class="btn btn-primary">Cadastre suas categorias</a>
                     </div>
                 </div>
             </div>

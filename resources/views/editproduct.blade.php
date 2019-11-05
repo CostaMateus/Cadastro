@@ -1,6 +1,6 @@
-@extends('layout.app', ["current" => "products"])
+@extends('layout.app', ["current" => "categorias"])
 
-@section('title', 'Novo produto')
+@section('title', 'Editar produto')
 
 @section('body')
 
@@ -8,19 +8,19 @@
         <div class="mx-auto col-md-8">
             <div class="card border">
                 <div class="card-body">
-                    <form action="/products" method="POST">
+                    <form action="/products/{{ base64_encode($product->id) }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="newproduct">Nome do produto</label>
-                            <input type="text" class="form-control" name="newproduct" id="newproduct" placeholder="Produto" autofocus >
+                            <label for="name">Nome do produto</label>
+                            <input type="text" class="form-control" name="name" id="name" value="{{ $product->name }}" placeholder="Produto" autofocus >
                         </div>
                         <div class="form-group">
                             <label for="stock">Quantidade em estoque</label>
-                            <input type="number" class="form-control" name="stock" id="stock" placeholder="Estoque" >
+                            <input type="number" class="form-control" name="stock" id="stock" value="{{ $product->stock }}" placeholder="Estoque" >
                         </div>
                         <div class="form-group">
                             <label for="price">Preço da unidade</label>
-                            <input type="number" class="form-control" name="price" id="price" placeholder="Preço" step="0.01" >
+                            <input type="number" class="form-control" name="price" id="price" value="{{ $product->price }}" placeholder="Preço" step="0.01" >
                         </div>
 
                         <div class="form-group">
@@ -28,7 +28,8 @@
                             <select class="form-control" name="category_id" id="category_id">
                                 <option value="0" >Selecione uma categoria</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ base64_encode($category->id) }}" >
+                                    <option value="{{ base64_encode($category->id) }}"
+                                        @if ($product->category == $category->name) selected @endif>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach

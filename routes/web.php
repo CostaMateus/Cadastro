@@ -16,11 +16,13 @@ Route::get('/', function () {
 });
 
 // Route::get('/produtos', 'ProductController@index');
-Route::resource('/produtos', 'ProductController');
+Route::resource('/products', 'ProductController');
+Route::get('/products/{id}/delete', 'ProductController@destroy');
+Route::post('/products/{id}', 'ProductController@update');
 
-Route::get('/categorias', 'CategoryController@index');
-Route::get('/categorias/novo', 'CategoryController@create');
-Route::post('/categorias', 'CategoryController@store');
-Route::get('/categorias/editar/{id}', 'CategoryController@edit');
-Route::get('/categorias/apagar/{id}', 'CategoryController@destroy');
-Route::post('/categorias/{id}', 'CategoryController@update');
+Route::get('/categories', 'CategoryController@index');
+Route::get('/categories/novo', 'CategoryController@create');
+Route::post('/categories', 'CategoryController@store');
+Route::get('/categories/editar/{id}', 'CategoryController@edit');
+Route::get('/categories/apagar/{id}', 'CategoryController@destroy');
+Route::post('/categories/{id}', 'CategoryController@update');
