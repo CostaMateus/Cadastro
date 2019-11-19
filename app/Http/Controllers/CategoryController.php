@@ -38,12 +38,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $message = [
+            'name.required' => 'O campo \'categoria\' é obrigatório.',
+            'name.unique' => 'A categoria já está cadastrada.'
+        ];
+
         $validatedData = $request->validate([
-            'newcategory' => 'required|string',
-        ]);
+            'name' => 'required|string|unique:categories',
+        ], $message);
 
         $category = new Category();
-        $category->name = $validatedData['newcategory'];
+        $category->name = $validatedData['name'];
         $category->save();
 
         return redirect('/categories');
@@ -88,14 +93,14 @@ class CategoryController extends Controller
     public function update(Request $request, $category_id)
     {
         $validatedData = $request->validate([
-            'editname' => 'required|string',
+            'name' => 'required|string',
         ]);
 
         $category = Category::find(base64_decode($category_id));
 
         if(isset($category))
         {
-            $category->name = $validatedData['editname'];
+            $category->name = $validatedData['name'];
             $category->save();
         }
 
@@ -119,5 +124,10 @@ class CategoryController extends Controller
         }
 
         return redirect('/categories');
+    }
+
+    public function getJson()
+    {
+        return json_encode(Category::select('id', 'name')->get());
     }
 }

@@ -11,8 +11,11 @@
                     <form action="/categories" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="newcategory">Nome da Categoria</label>
-                            <input type="text" class="form-control" name="newcategory" id="newcategory" placeholder="Categoria" autofocus >
+                            <label for="name">Nome da Categoria</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name" placeholder="Categoria" autofocus >
+                            @if($errors->has('name'))
+                                <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
                         <a href="/categories" class="btn btn-danger btn-sm">Cancel</a>

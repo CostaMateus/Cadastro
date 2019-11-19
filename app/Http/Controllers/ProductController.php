@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+
+    public function indexView()
+    {
+        $product = DB::table('products as p')
+                    ->join('categories as c', 'p.category_id', '=', 'c.id')
+                    ->select('p.id', 'p.name', 'p.stock', 'p.price', 'c.name as category')
+                    ->orderBy('p.name', 'asc')
+                    ->orderBy('c.name', 'asc')
+                    ->get();
+
+        return view('products')->with('products', $product);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +36,7 @@ class ProductController extends Controller
                     ->orderBy('c.name', 'asc')
                     ->get();
 
-        return view('products')->with('products', $product);
+        return json_encode($product);
     }
 
     /**
@@ -46,21 +59,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $message = [
+            'name.required' => 'O campo \'produto\' é obrigatório.',
+            'stock.required' => 'O campo \'estoque\' é obrigatório,',
+            'price.required' => 'O campo \'preço\' é obrigatório,',
+        ];
+
         $validatedData = $request->validate([
-            'newproduct' => 'required|string',
+            'name' => 'required|string',
             'stock' => 'required|numeric',
             'price' => 'required|numeric',
             'category_id' => 'required|string',
-        ]);
+        ], $message);
 
         $product = new Product();
-        $product->name = $validatedData['newproduct'];
+        $product->name = $validatedData['name'];
         $product->stock = $validatedData['stock'];
         $product->price = $validatedData['price'];
         $product->category_id = base64_decode($validatedData['category_id']);
         $product->save();
 
-        return redirect('/products');
+        return json_encode($product);
+        // return redirect('/products');
     }
 
     /**
@@ -69,9 +89,19 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($product_id)
     {
-        //
+        $product = Product::find(base64_decode($product_id));
+
+        if (isset($product))
+        {
+            return json_encode($product);
+        }
+
+        return response()->json( [
+            'success' => false,
+            'message' => 'Product not found',
+        ], 404);
     }
 
     /**
@@ -132,6 +162,18 @@ class ProductController extends Controller
         return redirect('/products');
     }
 
+    public function destroyNormal($product_id)
+    {
+        $product = Product::find(base64_decode($product_id));
+
+        if(isset($product))
+        {
+            $product->delete();
+        }
+
+        return redirect('/products');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -145,8 +187,26 @@ class ProductController extends Controller
         if(isset($product))
         {
             $product->delete();
+            return response()->json( [
+                'success' => true,
+                'message' => 'Product successfully deleted',
+            ], 200);
         }
 
-        return redirect('/products');
+        return response()->json( [
+            'success' => false,
+            'message' => 'Product not found',
+        ], 404);
+    }
+
+    public function getJson()
+    {
+        // $product = DB::table('products as p')
+        //             ->join('categories as c', 'p.category_id', '=', 'c.id')
+        //             ->select('p.id', 'p.name', 'p.stock', 'p.price', 'c.name as category')
+        //             ->orderBy('p.name', 'asc')
+        //             ->orderBy('c.name', 'asc')
+        //             ->get();
+        return json_encode(Product::all());
     }
 }

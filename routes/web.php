@@ -15,14 +15,16 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/produtos', 'ProductController@index');
-Route::resource('/products', 'ProductController');
-Route::get('/products/{id}/delete', 'ProductController@destroy');
-Route::post('/products/{id}', 'ProductController@update');
+Route::get('/products', 'ProductController@indexView')->name('products.index');
+Route::post('/products', 'ProductController@store')->name('products.store');
+Route::get('/products/create', 'ProductController@create')->name('products.create');
+Route::get('/products/{id}/edit', 'ProductController@edit')->name('products.edit');
+Route::post('/products/{id}', 'ProductController@update')->name('products.update');
+Route::get('/products/{id}/delete', 'ProductController@destroyNormal')->name('products.destroy');
 
 Route::get('/categories', 'CategoryController@index');
-Route::get('/categories/novo', 'CategoryController@create');
 Route::post('/categories', 'CategoryController@store');
+Route::get('/categories/novo', 'CategoryController@create');
+Route::post('/categories/{id}', 'CategoryController@update');
 Route::get('/categories/editar/{id}', 'CategoryController@edit');
 Route::get('/categories/apagar/{id}', 'CategoryController@destroy');
-Route::post('/categories/{id}', 'CategoryController@update');
