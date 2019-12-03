@@ -11,6 +11,9 @@
 |
 */
 
+use App\Developer;
+use App\Project;
+
 Route::get('/', function () {
     return view('index');
 });
@@ -28,3 +31,13 @@ Route::get('/categories/novo', 'CategoryController@create');
 Route::post('/categories/{id}', 'CategoryController@update');
 Route::get('/categories/editar/{id}', 'CategoryController@edit');
 Route::get('/categories/apagar/{id}', 'CategoryController@destroy');
+
+Route::get('dev_projs', function () {
+    $devs = Developer::with('projects')->get();
+    return json_encode($devs);
+});
+
+Route::get('proj_devs', function () {
+    $projs = Project::with('developers')->get();
+    return json_encode($projs);
+});

@@ -18,7 +18,7 @@ class ProjectSeeder extends Seeder
 		Project::truncate();
 
         $timestamp = date('Y-m-d H:m:s');
-        
+
         $data = [
             [
                 'name' => 'Durand',
@@ -39,7 +39,7 @@ class ProjectSeeder extends Seeder
                 'updated_at' => $timestamp
             ],
             [
-                'name' => 'MD',
+                'name' => 'Matheus Define',
                 'eta_hours' => $faker->randomNumber(3),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp

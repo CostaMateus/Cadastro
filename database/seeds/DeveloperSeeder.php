@@ -17,26 +17,26 @@ class DeveloperSeeder extends Seeder
 
 		Developer::truncate();
 
-		$timestamp = date('Y-m-d H:m:s');
-		$data = [];
+		// $timestamp = date('Y-m-d H:m:s');
+		// $data = [];
 
-        foreach (range(1,10) as $i)
-        {
-            $data[] = [
-                'name' => $faker->name,
-                'role' => $faker->randomElement([
-                    'Analista Senior',
-                    'Analista Pleno',
-                    'Analista Junior',
-                    'Dev Senior',
-                    'Dev Pleno',
-                    'Dev Junior'
-                ]),
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp
-            ];
-        }
+        // foreach (range(1,10) as $i)
+        // {
+        //     $data[] = [
+        //         'name' => $faker->name,
+        //         'role' => $faker->randomElement([
+        //             'Analista Senior',
+        //             'Analista Pleno',
+        //             'Analista Junior',
+        //             'Dev Senior',
+        //             'Dev Pleno',
+        //             'Dev Junior'
+        //         ]),
+        //         'created_at' => $timestamp,
+        //         'updated_at' => $timestamp
+        //     ];
+        // }
 
-		Developer::insert($data);
+		// Developer::insert($data);
     }
 }
